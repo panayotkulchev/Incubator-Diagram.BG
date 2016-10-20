@@ -1,0 +1,51 @@
+		<itemtype code="Personn" autocreate="true" generate="true">
+			<deployment table="CuppyTrailPersonn" typecode="10124" />
+			<attributes>
+
+				<attribute type="java.lang.String" qualifier="egn">
+					<modifiers optional="false" unique="true" />
+					<persistence type="property" />
+				</attribute>
+
+				<attribute type="java.lang.String" qualifier="name">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute type="java.lang.Integer" qualifier="age">
+					<persistence type="property"></persistence>
+				</attribute>
+
+				<attribute type="java.lang.String" qualifier="email">
+					<persistence type="property" />
+				</attribute>
+
+			</attributes>
+		</itemtype>
+
+		<itemtype code="Tripp" autocreate="true" generate="true">
+			<deployment table="CuppyTrailTripp" typecode="19125" />
+			<attributes>
+
+				<attribute type="int" qualifier="id">
+					<persistence type="property" />
+					<modifiers unique="true" optional="false" />
+				</attribute>
+
+				<attribute type="java.lang.String" qualifier="city">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute type="java.lang.String" qualifier="dateArrived">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute type="java.lang.String" qualifier="dateDeparted">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute type="Personn" qualifier="personn">
+					<persistence type="property" />
+				</attribute>
+
+			</attributes>
+		</itemtype>

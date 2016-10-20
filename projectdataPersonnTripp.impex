@@ -1,0 +1,10 @@
+INSERT_UPDATE Personn;		egn[unique=true];		name
+;									111;						Jhon
+;									222;						Rich
+;									333;						Paul
+;									444;						Antony
+
+INSERT_UPDATE Tripp;		   id[unique=true];		city;				dateArrived; 		dateDeparted; 		personn(egn)
+;									1;							Burgas;			20161001;			20161030;			111;
+;									2;							Burgas;			20161005;			20161025;			222;
+;									3;							Plovdiv;			20161020;			20161022;			333

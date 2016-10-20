@@ -1,62 +1,27 @@
-/*
- * [y] hybris Platform
- *
- * Copyright (c) 2000-2016 SAP SE
- * All rights reserved.
- *
- * This software is the confidential and proprietary information of SAP
- * Hybris ("Confidential Information"). You shall not disclose such
- * Confidential Information and shall use it only in accordance with the
- * terms of the license agreement you entered into with SAP Hybris.
- */
 package de.hybris.platform.cuppytrail.daos.impl;
 
 import de.hybris.platform.cuppytrail.daos.TrippDAO;
-import de.hybris.platform.cuppytrail.model.PersonnModel;
 import de.hybris.platform.cuppytrail.model.TrippModel;
+import de.hybris.platform.servicelayer.internal.dao.DefaultGenericDao;
 import de.hybris.platform.servicelayer.model.ModelService;
 import de.hybris.platform.servicelayer.search.FlexibleSearchQuery;
 import de.hybris.platform.servicelayer.search.FlexibleSearchService;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 
-/**
- *
- */
-public class DefaultTrippDAO implements TrippDAO
+public class DefaultTrippDAO extends DefaultGenericDao<TrippModel> implements TrippDAO
 {
+	public DefaultTrippDAO()
+	{
+		super(TrippModel._TYPECODE);
+	}
 
 	@Resource
 	private ModelService modelService;
-
-	@Resource
-	private FlexibleSearchService flexibleSearchService;
-
-	@Override
-	public void addPersonn(final PersonnModel personn)
-	{
-		modelService.save(personn);
-	}
-
-	@Override
-	public void updatePersonn(final PersonnModel personn)
-	{
-		// YTODO Auto-generated method stub
-
-	}
-
-	@Override
-	public List<PersonnModel> findAllPeople()
-	{
-		final String queryString = "SELECT {p:" + PersonnModel.PK + "} " + "FROM {" + PersonnModel._TYPECODE + " AS p} ";
-
-		final FlexibleSearchQuery query = new FlexibleSearchQuery(queryString);
-
-		return flexibleSearchService.<PersonnModel> search(query).getResult();
-	}
 
 	@Override
 	public void addTripp(final TrippModel tripp)
@@ -65,72 +30,33 @@ public class DefaultTrippDAO implements TrippDAO
 	}
 
 	@Override
-	public void updateTripp(final TrippModel tripp)
-	{
-		// YTODO Auto-generated method stub
-
-	}
-
-	@Override
-	public List<PersonnModel> findPeopleInSameCityAtSameTime(final String city, final String date)
-	{
-
-		final StringBuilder sb = new StringBuilder();
-
-		sb.append("SELECT { ").append(PersonnModel.PK).append("} ");
-		sb.append("FROM { ").append(PersonnModel._TYPECODE).append("} ");
-		sb.append("WHERE { ").append(PersonnModel.EGN).append("} ");
-		sb.append("IN ({{ SELECT {").append(TrippModel.EGN).append("} ");
-		sb.append("FROM {").append(TrippModel._TYPECODE).append("} ");
-		sb.append("WHERE {").append(TrippModel.CITY).append("} = ?city ");
-		sb.append("AND {").append(TrippModel.DATEARRIVED).append("} <= ?date ");
-		sb.append("AND {").append(TrippModel.DATEDEPARTED).append("} >= ?date }}) ");
-
-		final FlexibleSearchQuery query = new FlexibleSearchQuery(sb.toString());
-
-		query.addQueryParameter("city", city);
-		query.addQueryParameter("date", date);
-
-		return flexibleSearchService.<PersonnModel> search(query).getResult();
-	}
-
-	@Override
-	public List<PersonnModel> findPeopleByKeyword(final String keyword)
-	{
-		final StringBuilder sb = new StringBuilder();
-
-		sb.append("SELECT {").append(PersonnModel.PK).append("} ");
-		sb.append("FROM {").append(PersonnModel._TYPECODE).append("} ");
-		sb.append("WHERE {").append(PersonnModel.NAME).append("} ");
-		sb.append("LIKE CONCAT('%', CONCAT(?keyword, '%'))");
-
-		final FlexibleSearchQuery query = new FlexibleSearchQuery(sb.toString());
-
-		query.addQueryParameter("keyword", keyword);
-
-		return flexibleSearchService.<PersonnModel> search(query).getResult();
-	}
-
-	@Override
 	public List<String> findCitiesByVisitors()
 	{
-		// YTODO Auto-generated method stub
-		return null;
-	}
+		final StringBuilder sb = new StringBuilder();
 
-	public void setFlexibleSearchService(final FlexibleSearchService flexibleSearchService)
-	{
-		this.flexibleSearchService = flexibleSearchService;
+		//		final String s = "SELECT {Tripp.city} from {Tripp} group by {Tripp.city} order by count({Tripp.city}) desc";
+
+		sb.append("SELECT {").append(TrippModel.CITY).append("} ");
+		sb.append("FROM {").append(TrippModel._TYPECODE).append("} ");
+		sb.append("GROUP BY {").append(TrippModel.CITY).append("} ");
+		sb.append("ORDER BY COUNT ({").append(TrippModel.CITY).append("}) DESC");
+
+		final FlexibleSearchQuery query = new FlexibleSearchQuery(sb.toString());
+
+		final List<String> cities = getFlexibleSearchService().<String> search(query).getResult();
+
+		return cities;
 	}
 
 	@Override
 	public List<TrippModel> findAllTrips()
 	{
-		final String query = "SELECT {t:" + TrippModel.PK + "} " + "FROM {" + TrippModel._TYPECODE + " AS t} ";
-
-		final FlexibleSearchQuery flexibleSearchQuery = new FlexibleSearchQuery(query);
-
-		return flexibleSearchService.<TrippModel> search(flexibleSearchQuery).getResult();
+		return this.find();
 	}
 
+	@Override
+	public List<TrippModel> findAllTripsByCity(final String city)
+	{
+		return find(Collections.<String, Object> singletonMap(TrippModel.CITY, city));
+	}
 }
