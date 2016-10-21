@@ -1,0 +1,67 @@
+
+		<enumtype code="AddressType" dynamic="false">
+			<value code="permanent" />
+			<value code="residential" />
+			<value code="shipping" />
+		</enumtype>
+
+
+		<relation code="UserAddressRelation" localized="false">
+			<sourceElement type="Userr" qualifier="user" cardinality="one" />
+			<targetElement type="Addresss" qualifier="addresses" cardinality="many" />
+		</relation>
+
+
+		<itemtype code="Userr">
+			<deployment table="CuppyTrailUserr" typecode="19991" />
+			<attributes>
+
+				<attribute type="java.lang.String" qualifier="email">
+					<persistence type="property" />
+					<modifiers unique="true" optional="false" />
+				</attribute>
+
+				<attribute type="java.lang.String" qualifier="name">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute type="java.util.Date" qualifier="birthDay">
+					<persistence type="property" />
+				</attribute>
+
+			</attributes>
+		</itemtype>
+
+
+		<itemtype code="Addresss">
+			<deployment table="CuppyTrailAddresss" typecode="19995" />
+			<attributes>
+
+				<attribute type="java.lang.Integer" qualifier="code">
+					<persistence type="property" />
+					<modifiers unique="true" optional="false" />
+				</attribute>
+
+				<attribute type="java.lang.String" qualifier="country">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute type="java.lang.String" qualifier="city">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute type="java.lang.String" qualifier="street">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute type="java.lang.Integer" qualifier="zipCode">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute type="AddressType" qualifier="addressType">
+					<persistence type="property" />
+					<defaultvalue>em().getEnumerationValue("AddressType","permanent")</defaultvalue>
+				</attribute>
+
+			</attributes>
+		</itemtype>
