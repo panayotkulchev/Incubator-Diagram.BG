@@ -17,9 +17,6 @@ import de.hybris.platform.cuppytrail.model.UserrModel;
 import java.util.List;
 
 
-/**
- *
- */
 public interface AddresssDao
 {
 	void registerAddress(AddresssModel address);

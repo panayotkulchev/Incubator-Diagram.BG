@@ -27,7 +27,6 @@ public class DefaultAddresssDao extends DefaultGenericDao<AddresssModel> impleme
 	public void registerAddress(final AddresssModel address)
 	{
 		modelService.save(address);
-
 	}
 
 	@Override
@@ -39,8 +38,6 @@ public class DefaultAddresssDao extends DefaultGenericDao<AddresssModel> impleme
 	@Override
 	public List<AddresssModel> findAddressesByKewword(final String keyword)
 	{
-		//		final StringBuilder sb = new StringBuilder();
-
 		final String s = "SELECT DISTINCT {" + AddresssModel.PK + "} " + "FROM {" + AddresssModel._TYPECODE + "} "
 				+ "WHERE CONCAT ({" + AddresssModel.CITY + "}, {" + AddresssModel.STREET + "}) LIKE '%" + keyword + "%'";
 
