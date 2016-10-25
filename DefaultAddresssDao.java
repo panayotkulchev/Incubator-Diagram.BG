@@ -39,16 +39,12 @@ public class DefaultAddresssDao extends DefaultGenericDao<AddresssModel> impleme
 	@Override
 	public List<AddresssModel> findAddressesByKewword(final String keyword)
 	{
-		final StringBuilder sb = new StringBuilder();
+		//		final StringBuilder sb = new StringBuilder();
 
-		//		sb.append("SELECT {").append(UserrModel.PK).append("} ");
-		//		sb.append("FROM {").append(UserrModel._TYPECODE).append("} ");
-		//		sb.append("WHERE {").append(AddresssModel.CITY).append("} ");
-		//		sb.append("LIKE CONCAT('%', CONCAT(?keyword, '%')) ");
-		//		sb.append("{").append(AddresssModel.STREET).append("} ");
-		//		sb.append("LIKE CONCAT('%', CONCAT(?keyword, '%')) ");
+		final String s = "SELECT DISTINCT {" + AddresssModel.PK + "} " + "FROM {" + AddresssModel._TYPECODE + "} "
+				+ "WHERE CONCAT ({" + AddresssModel.CITY + "}, {" + AddresssModel.STREET + "}) LIKE '%" + keyword + "%'";
 
-		final FlexibleSearchQuery query = new FlexibleSearchQuery(sb.toString());
+		final FlexibleSearchQuery query = new FlexibleSearchQuery(s);
 
 		query.addQueryParameter("keyword", keyword);
 
@@ -58,7 +54,14 @@ public class DefaultAddresssDao extends DefaultGenericDao<AddresssModel> impleme
 	@Override
 	public void addAddressesToUser(final UserrModel user, final AddresssModel... addresses)
 	{
-		user.getAddresses().addAll(Arrays.asList(addresses));
+		if (user.getAddresses() == null)
+		{
+			user.setAddresses(Arrays.asList(addresses));
+		}
+		else
+		{
+			user.getAddresses().addAll(Arrays.asList(addresses));
+		}
 
 		modelService.save(user);
 	}
