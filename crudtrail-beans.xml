@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+	<bean class="de.hybris.platform.crudtrail.data.ProductData">
+		<description>Data object representing a Product</description>
+		<property name="code" type="String"/>
+		<property name="name" type="String"/>
+		<property name="price" type="Double"/>
+		<property name="productStatus" type="String"/>
+		<property name="description" type="String"/>
+		<property name="descriptionShort" type="String"/>
+		<property name="imageUrl" type="String"/>
+	</bean>
+
+</beans>
