@@ -1,0 +1,7 @@
+INSERT_UPDATE Userr; 		email[unique=true]; 		name;		birthDay[dateformat=dd.MM.yyyy]
+; 									"email1@mail.com";		"Ivan";	22.10.1985
+;									"email2@gmail.com";		"Peter";	3.1.1985;
+
+INSERT_UPDATE Addresss;		code[unique=true];		country;		city; 	street;				zipCode;	addressType(code);	user(email)			
+;									1;								Bulgaria;	Varna;	Ivan Vazov 5;		9000;		shipping;				email1@mail.com
+;									2;								Bulgaria;	Sofia;	Hristo Botev 2;	1000;		permanent;				email1@mail.com
