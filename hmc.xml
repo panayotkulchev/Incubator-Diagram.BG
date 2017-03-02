@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<configuration xmlns="hybris.de/schemas/hmc/generic" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="hybris.de/schemas/hmc/generic hmc.xsd">
+
+	<!-- Configuration for extension cuppytrail -->
+	<explorertree>
+		<group name="cuppytrailgroup">
+			<typeref type="Personn" />
+			<typeref type="Tripp" />
+		</group>
+	</explorertree>
+
+	<type name="Personn" mode="append">
+		<organizer>
+			<search mode="replace">
+				<condition attribute="egn" />
+				<condition attribute="name" />
+				<condition attribute="age" />
+				<condition attribute="email" />
+			</search>
+			<result>
+				<listview mode="replace">
+					<itemlayout>
+						<attribute name="egn" />
+						<attribute name="name" />
+						<attribute name="age" />
+						<attribute name="email" />
+					</itemlayout>
+				</listview>
+			</result>
+			<editor>
+				<essentials>
+					<listlayout>
+						<attribute name="egn" />
+					</listlayout>
+				</essentials>
+				<tab name="tab.cuppytrail">
+					<section name="section.cuppytrail">
+						<listlayout>
+							<attribute name="name" />
+							<attribute name="age" />
+							<attribute name="email" />
+						</listlayout>
+					</section>
+				</tab>
+			</editor>
+		</organizer>
+	</type>
+
+	<type name="Tripp" mode="append">
+		<organizer>
+			<search mode="replace">
+				<condition attribute="city" />
+				<condition attribute="dateArrived" />
+				<condition attribute="dateDeparted" />
+				<condition attribute="egn" />
+			</search>
+			<result>
+				<listview mode="replace">
+					<itemlayout>
+						<attribute name="city" />
+						<attribute name="dateArrived" />
+						<attribute name="dateDeparted" />
+						<attribute name="egn" />
+					</itemlayout>
+				</listview>
+			</result>
+			<editor>
+				<essentials>
+					<listlayout>
+						<attribute name="city" />
+						<attribute name="dateArrived" />
+						<attribute name="dateDeparted" />
+						<attribute name="egn" />
+					</listlayout>
+				</essentials>
+			</editor>
+		</organizer>
+	</type>
+
+</configuration>
